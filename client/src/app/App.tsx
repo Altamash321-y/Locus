@@ -251,27 +251,31 @@ export default function App() {
               return;
             }
 
-            const formatted = data.map((item: any, index: number) => ({
-              id: item.id || index,
-              username: item.username || "Anonymous",
-              avatar: item.avatar || "",
-              locality: item.city || item.locality || "Unknown",
-              timestamp: item.created_at
-                ? new Date(item.created_at).toLocaleString()
-                : "Recently",
-              headline: item.headline || item.title || "Untitled",
-              description: item.description || "",
-              image:
-                item.image ||
-                "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800",
-              category: item.category || "General",
-              isBreaking: item.is_breaking || false,
-              initialLikes: item.likes || 0,
-              initialComments: item.comments || 0,
-              distance: item.distance
-                ? `${Number(item.distance).toFixed(1)} km away`
-                : "",
-            }));
+            const formatted = data
+              .map((item: any, index: number) => ({
+                id: item.id || index,
+                username: item.username || "Anonymous",
+                avatar: item.avatar || "",
+                locality: item.city || item.locality || "Unknown",
+                timestamp: item.created_at
+                  ? new Date(item.created_at).toLocaleString()
+                  : "Recently",
+                headline: item.headline || item.title || "Untitled",
+                description: item.description || "",
+                image:
+                  item.image ||
+                  "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800",
+                category: item.category || "General",
+                isBreaking: item.is_breaking || false,
+                initialLikes: item.upvote || 0,
+                initialComments: item.comments || 0,
+                upvote: item.upvote || 0,
+                downvote: item.downvote || 0,
+                distance: item.distance
+                  ? `${Number(item.distance).toFixed(1)} km away`
+                  : "",
+              }))
+              .sort((a, b) => b.upvote - b.downvote - (a.upvote - a.downvote));
 
             setNews(formatted);
             setIsLoading(false);
